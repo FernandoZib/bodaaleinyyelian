@@ -24,14 +24,19 @@
 
 *{ margin:0; padding:0; box-sizing:border-box; }
 
-html{ scroll-behavior:smooth; overflow-x:hidden; }
+html{ scroll-behavior:smooth;}
 
 body{
   font-family: var(--serif);
   color: var(--text-dark);
   background: var(--ivory);
-  overflow-x:hidden;
+  overflow-x:hidden;  
   -webkit-font-smoothing:antialiased;
+}
+
+img {  
+  height: auto;
+  display: block; /* Evita espacios en blanco debajo de las imágenes */
 }
 
 .bg-texture{
@@ -62,7 +67,7 @@ body{
 
 .eyebrow{
   font-family: var(--display);
-  font-size: 0.72rem;
+  font-size: 0.9rem;
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--dusk-blue);
@@ -146,12 +151,24 @@ body{
 .seal{ width: 64px; margin: 0 auto 26px; color: var(--dusk-blue); }
 .seal svg{ width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:1.3; }
 
+/* Animación flotante para el texto de scroll */
+@keyframes floatUpDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
 .scroll-hint{
-  font-size: 0.8rem;
+  font-size: 1rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-dark);
- 
+  font-weight: bold;  
+  display: inline-block;
+  animation: floatUpDown 2.5s ease-in-out infinite;
 }
 
 /* ===================== STACKED CARDS (invitación + countdown) ===================== */
