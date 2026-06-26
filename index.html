@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aleiny &amp; César Elián · 18 de Septiembre 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- audio toggle -->
+<button id="soundToggle" class="sound-toggle" aria-label="Activar o silenciar música">
+  <svg id="iconMuted" viewBox="0 0 24 24" width="18" height="18"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor"/><line x1="16" y1="9" x2="22" y2="15" stroke="currentColor" stroke-width="1.6"/><line x1="22" y1="9" x2="16" y2="15" stroke="currentColor" stroke-width="1.6"/></svg>
+  <svg id="iconSound" viewBox="0 0 24 24" width="18" height="18" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 010 7" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M19 6a8 8 0 010 12" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+</button>
+<audio id="bgMusic" loop preload="none">
+  <source src="" type="audio/mpeg">
+</audio>
+
+<!-- ============ HERO ============ -->
+<section class="section hero" id="hero">
+  <div class="hero-frame">
+    <p class="eyebrow">¡Nos casamos!</p>
+    <h1 class="hero-names">
+      <span>Aleiny Monserrat</span>
+      <span class="hero-and">y</span>
+      <span>César Elián</span>
+    </h1>
+    <p class="hero-date">18 · 09 · 2026</p>
+    <div class="seal" aria-hidden="true">      
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <p class="scroll-hint">desliza para descubrir más</p>
+  </div>
+</section>
+
+<!-- ============ TARJETA INVITACIÓN + COUNTDOWN ============ -->
+<section class="section stack-section" id="countdown">
+  <div class="stack-wrap">
+
+    <div class="invite-card">
+      <div class="invite-seal" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="46" />
+          <path d="M50 24 C46 34, 40 36, 36 44 C32 52, 36 60, 44 60 C42 66, 46 72, 52 70 C58 76, 66 72, 64 64 C72 64, 76 56, 70 50 C76 44, 72 36, 64 36 C66 28, 58 24, 52 30 C50 26, 50 24, 50 24 Z" />
+          <line x1="50" y1="30" x2="50" y2="70" />
+        </svg>
+      </div>
+
+      <p class="invite-title">Celebra con nosotros</p>
+
+      <div class="invite-month-arc" aria-hidden="true">
+        <svg viewBox="0 0 200 46" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path id="monthArc" d="M 6 38 Q 100 6 194 38" fill="none" />
+          <text class="arc-text">
+            <textPath href="#monthArc" xlink:href="#monthArc" startOffset="50%" text-anchor="middle">SEPTIEMBRE</textPath>
+          </text>
+        </svg>
+      </div>
+      <div class="invite-date-row">
+        <span class="invite-day">Viernes</span>
+        <span class="invite-num">18</span>
+        <span class="invite-time">5:00 P.M.</span>
+      </div>
+
+      <div class="invite-illustration" aria-hidden="true">
+      <img src="novios.png" width="100%" style="  display: block;
+  margin: auto;">  
+      </div>
+
+      <p class="invite-ceremony">Ceremonia Católica<br>&amp; Recepción</p>
+      <p class="invite-venue">Iglesia de la Inmaculada Concepción</p>
+      <a class="invite-map-btn" href="https://maps.app.goo.gl/E2DvywHhgRQQ3T9Q6?g_st=ic" target="_blank" rel="noopener">Ver mapa</a>      
+    </div>
+
+    <div class="countdown-card">
+      <h2 class="countdown-title">¡Prepárate!</h2>
+      <p class="countdown-subtitle">Nos vemos dentro de</p>
+
+      <div class="countdown-grid" id="countdown-timer">
+        <span class="cd-num" id="cd-days" style="grid-area:n1;">00</span>
+        <span class="cd-sep" style="grid-area:s1;">:</span>
+        <span class="cd-num" id="cd-hours" style="grid-area:n2;">00</span>
+        <span class="cd-sep" style="grid-area:s2;">:</span>
+        <span class="cd-num" id="cd-min" style="grid-area:n3;">00</span>
+        <span class="cd-sep" style="grid-area:s3;">:</span>
+        <span class="cd-num" id="cd-sec" style="grid-area:n4;">00</span>
+
+        <span class="cd-chevron cd-chevron-left" style="grid-area:cl;">&lsaquo;</span>
+        <span class="cd-label" style="grid-area:l1;">Días</span>
+        <span class="cd-label" style="grid-area:l2;">Horas</span>
+        <span class="cd-label" style="grid-area:l3;">Minutos</span>
+        <span class="cd-label" style="grid-area:l4;">Segundos</span>
+        <span class="cd-chevron cd-chevron-right" style="grid-area:cr;">&rsaquo;</span>
+      </div>     
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ MENSAJE ============ -->
+<section class="section message-section" id="mensaje">
+  <div class="divider-leaf" aria-hidden="true">
+    <svg viewBox="0 0 120 24"><path d="M0 12 H45" /><path d="M75 12 H120" /><path d="M60 12 c-6 -10 -18 -10 -18 0 c0 10 12 10 18 0 c6 -10 18 -10 18 0 c0 10 -12 10 -18 0" /></svg>
+  </div>
+  <div class="message-text typewriter-wrap">
+    <span class="tw-line" data-text="Coincidir fue un instante, pero elegirnos es para siempre."></span>
+    <span class="tw-line" data-text=" "></span>
+    <span class="tw-line" data-text="Encontramos el amor y, con él, la certeza de querer caminar de la mano construyendo una vida de respeto, amor, paz y felicidad."></span>
+    <span class="tw-line" data-text=" "></span>
+    <span class="tw-line" data-text="Estamos listos para dar el paso más importante de nuestras vidas, y nada nos haría más felices que contar con tu presencia en este día tan especial."></span>
+  </div>
+</section>
+
+<!-- ============ FAMILIA ============ -->
+<section class="section family-section" id="familia">
+  <p class="eyebrow">Con la bendición de Dios y de nuestros padres</p>
+
+  <div class="family-grid">
+    <div class="family-card">
+      <h3 class="family-role">Padres del novio</h3>
+      <p>Daniel Antonio Díaz Esquivel</p>
+      <p>Fany Angélica Cauich Baas</p>
+    </div>
+    <div class="family-card">
+      <h3 class="family-role">Padres de la novia</h3>
+      <p>Gener Cecilio Canul Campos</p>
+      <p>Rosa María Chuc Cima</p>
+    </div>
+  </div>
+
+  <div class="family-card padrinos-card">
+    <h3 class="family-role">Padrinos</h3>
+    <p>David Roberto Tah Pool <span class="rip">(+)</span></p>
+    <p>Teresa Cauich Baas</p>
+  </div>
+</section>
+
+<!-- ============ FECHA / EVENTOS ============ -->
+<section class="section events-section" id="eventos">
+  <p class="eyebrow eyebrow-light">Viernes</p>
+  <h2 class="section-title light">18 de Septiembre, 2026</h2>
+
+  <div class="event-cards">
+
+    <article class="event-card">
+      <img src="iglesia.jpg" width="250px" style="border-radius: 20px;">
+      <h3>Ceremonia religiosa</h3>
+      <p class="event-place">Iglesia de la Virgen de la Inmaculada Concepción</p>
+      <p class="event-time">5:00 p.m.</p>
+      <a class="map-btn" href="https://maps.app.goo.gl/E2DvywHhgRQQ3T9Q6?g_st=ic" target="_blank" rel="noopener">Ver mapa</a>
+    </article>
+
+    <article class="event-card">
+      <img src="local.jpeg" width="250px" style="border-radius: 20px;">
+      <h3>Recepción</h3>
+      <p class="event-place">Local el Tío Jhon</p>
+      <p class="event-time">7:00 p.m.</p>
+      <a class="map-btn" href="https://maps.app.goo.gl/WR5w1gWkWsRLN3FeA?g_st=ic" target="_blank" rel="noopener">Ver mapa</a>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ DRESS CODE + ITINERARIO ============ -->
+<div class="dresscode-itinerary-block" id="dresscode">
+
+  <!-- Tarjeta dress code beige flotante -->
+  <div class="dresscode-card">
+    <div class="dresscode-seal" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="46" />
+        <path d="M50 24 C46 34, 40 36, 36 44 C32 52, 36 60, 44 60 C42 66, 46 72, 52 70 C58 76, 66 72, 64 64 C72 64, 76 56, 70 50 C76 44, 72 36, 64 36 C66 28, 58 24, 52 30 C50 26, 50 24, 50 24 Z" />
+        <line x1="50" y1="30" x2="50" y2="70" />
+      </svg>
+    </div>
+    <h2 class="dresscode-title">Dress code</h2>
+    <p class="dresscode-subtitle">Formal/Rigurosa</p>
+    <div class="dress-icons" aria-hidden="true">
+      <img src="vestimenta.png" width="400px">
+    </div>
+    <p class="dresscode-roles"><strong>¡Queremos que luzcan increíbles!</p></strong>
+    <div class="dresscode-divider" aria-hidden="true"></div>
+    <p class="dresscode-note"><strong>- Agradecemos su atención a la etiqueta -</strong><br> Para honrar a la novia, se solicita gentilmente a nuestras invitadas evitar el <strong>color blanco</strong> en todas sus tonalidades, así como el <strong>color azul marino</strong>.</p>
+  </div>
+
+  <!-- Cinta banner itinerario (fondo azul + cinta blanca con picos simétricos) -->
+  <div class="itinerary-outer" id="itinerario">
+    <div class="itinerary-card">
+      <h2 class="itinerary-title">Itinerario</h2>
+      <div class="itinerary-scroll">
+        <ol class="itinerary-track">
+          <li class="it-stop">
+            <span class="it-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64"><path d="M16 30 C16 22 24 16 32 16 C40 16 48 22 48 30" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="22" cy="38" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="42" cy="38" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            </span>
+            <span class="it-time">5:00 p.m.</span>
+            <span class="it-label">Ceremonia religiosa</span>
+          </li>
+          <li class="it-stop">
+            <span class="it-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64"><path d="M16 14 H48 L32 36 Z" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="32" y1="36" x2="32" y2="54" stroke="currentColor" stroke-width="1.6"/><line x1="22" y1="54" x2="42" y2="54" stroke="currentColor" stroke-width="1.6"/><line x1="26" y1="10" x2="20" y2="4" stroke="currentColor" stroke-width="1.2"/></svg>
+            </span>
+            <span class="it-time">7:00 p.m.</span>
+            <span class="it-label">Cóctel de<br>bienvenida</span>
+          </li>
+          <li class="it-stop">
+            <span class="it-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64"><path d="M14 30 C14 18 24 10 32 10 C40 10 50 18 50 30" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="14" y1="30" x2="14" y2="54" stroke="currentColor" stroke-width="1.6"/><line x1="50" y1="30" x2="50" y2="54" stroke="currentColor" stroke-width="1.6"/><line x1="8" y1="54" x2="56" y2="54" stroke="currentColor" stroke-width="1.6"/></svg>
+            </span>
+            <span class="it-time">7:30 p.m.</span>
+            <span class="it-label">Ceremonia civil</span>
+          </li>
+          <li class="it-stop">
+            <span class="it-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64"><path d="M22 12 L14 30 H30 Z" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="22" y1="30" x2="22" y2="50" stroke="currentColor" stroke-width="1.6"/><path d="M42 12 L50 30 H34 Z" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="42" y1="30" x2="42" y2="50" stroke="currentColor" stroke-width="1.6"/><line x1="14" y1="54" x2="50" y2="54" stroke="currentColor" stroke-width="1.6"/></svg>
+            </span>
+            <span class="it-time">9:00 p.m.</span>
+            <span class="it-label">Brindis</span>
+          </li>
+          <li class="it-stop">
+            <span class="it-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64"><line x1="20" y1="10" x2="20" y2="54" stroke="currentColor" stroke-width="1.6"/><path d="M14 10 V24 M26 10 V24" stroke="currentColor" stroke-width="1.6"/><path d="M14 24 C14 30 26 30 26 24" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="44" y1="10" x2="44" y2="54" stroke="currentColor" stroke-width="1.6"/><path d="M38 10 C38 20 50 20 50 10" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            </span>
+            <span class="it-time">10:00 p.m.</span>
+            <span class="it-label">Cena</span>
+          </li>
+          <li class="it-stop">
+            <span class="it-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="32" cy="32" r="4" fill="currentColor"/><path d="M32 10 V18 M32 46 V54 M10 32 H18 M46 32 H54" stroke="currentColor" stroke-width="1.6"/></svg>
+            </span>
+            <span class="it-time">11:00 p.m.</span>
+            <span class="it-label">¡Se abre la pista y hasta que el cuerpo aguante!</span>
+          </li>
+        </ol>
+      </div>
+      <p class="itinerary-hint">deslízate para ver el itinerario completo →</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ MESA DE REGALO ============ -->
+<section class="section gift-section" id="regalo">
+  <div class="divider-leaf" aria-hidden="true">
+    <svg viewBox="0 0 120 24"><path d="M0 12 H45" /><path d="M75 12 H120" /><path d="M60 12 c-6 -10 -18 -10 -18 0 c0 10 12 10 18 0 c6 -10 18 -10 18 0 c0 10 -12 10 -18 0" /></svg>
+  </div>
+  <p class="eyebrow">Mesa de regalo</p>
+  <div class="gift-icon" aria-hidden="true">
+    <svg viewBox="0 0 80 80">
+      <rect x="14" y="34" width="52" height="34" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <rect x="10" y="24" width="60" height="12" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M40 24 V68 M40 24 C30 24 24 14 32 10 C38 8 40 16 40 24 C40 16 42 8 48 10 C56 14 50 24 40 24 Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    </svg>
+  </div>
+  <p class="gift-text">Nuestro mejor regalo es compartir contigo este gran día. Si deseas obsequiarnos algo, te sugerimos la siguiente opción:</p>
+  <p class="gift-highlight">Lluvia de sobres</p>
+  <p class="gift-note">(Habrá una urna discreta en la entrada de la recepción en nuestro gran día)</p>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="section footer-section">
+  <div class="monogram small" aria-hidden="true">
+    <svg viewBox="0 0 220 140" class="monogram-svg">
+      <text x="50" y="95" class="mono-letter mono-a">A</text>
+      <text x="118" y="60" class="mono-letter mono-amp">&amp;</text>
+      <text x="150" y="105" class="mono-letter mono-c">C</text>
+    </svg>
+  </div>
+  <p class="footer-names">Aleiny &amp; César Elián</p>
+  <p class="footer-date">18 de Septiembre, 2026</p>
+  <p class="footer-thanks">Con todo nuestro amor, gracias por ser parte de esta historia.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
