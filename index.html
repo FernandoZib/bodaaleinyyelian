@@ -147,21 +147,37 @@
   <div class="event-cards">
 
     <article class="event-card">
-      <img src="iglesia.jpg" width="250px" style="border-radius: 20px; display: block;
-  margin: auto;">
-      <h3>Ceremonia religiosa</h3>
-      <p class="event-place">Iglesia de la Virgen de la Inmaculada Concepción</p>
-      <p class="event-time">5:00 p.m.</p>
-      <a class="map-btn" href="https://maps.app.goo.gl/E2DvywHhgRQQ3T9Q6?g_st=ic" target="_blank" rel="noopener">Ver mapa</a>
+      <div class="event-photo-wrap">
+        <img class="event-photo" src="iglesia.jpg" alt="Ceremonia religiosa">
+        <span class="event-badge">01</span>
+      </div>
+      <div class="event-body">
+        <span class="event-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><path d="M24 4 L24 14 M18 9 L30 9 M24 14 C14 18 12 26 12 32 H36 C36 26 34 18 24 14 Z M9 44 H39 M12 32 L12 44 M36 32 L36 44 M21 44 V36 H27 V44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <h3>Ceremonia religiosa</h3>
+        <div class="event-divider" aria-hidden="true"></div>
+        <p class="event-place">Iglesia de la Virgen de la Inmaculada Concepción</p>
+        <p class="event-time">5:00 p.m.</p>
+        <a class="map-btn" href="https://maps.app.goo.gl/E2DvywHhgRQQ3T9Q6?g_st=ic" target="_blank" rel="noopener">Ver mapa</a>
+      </div>
     </article>
 
     <article class="event-card">
-      <img src="local.jpeg" width="250px" style="border-radius: 20px; display: block;
-  margin: auto;">
-      <h3>Recepción</h3>
-      <p class="event-place">Local el Tío Jhon</p>
-      <p class="event-time">7:00 p.m.</p>
-      <a class="map-btn" href="https://maps.app.goo.gl/WR5w1gWkWsRLN3FeA?g_st=ic" target="_blank" rel="noopener">Ver mapa</a>
+      <div class="event-photo-wrap">
+        <img class="event-photo" src="local.jpeg" alt="Recepción">
+        <span class="event-badge">02</span>
+      </div>
+      <div class="event-body">
+        <span class="event-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><path d="M12 14 C12 9 16 6 24 6 C32 6 36 9 36 14 C36 19 31 22 24 22 C17 22 12 19 12 14 Z M24 22 V32 M14 44 H34 M24 32 C18 32 15 36 15 40 V44 H33 V40 C33 36 30 32 24 32 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <h3>Recepción</h3>
+        <div class="event-divider" aria-hidden="true"></div>
+        <p class="event-place">Local el Tío Jhon</p>
+        <p class="event-time">7:00 p.m.</p>
+        <a class="map-btn" href="https://maps.app.goo.gl/WR5w1gWkWsRLN3FeA?g_st=ic" target="_blank" rel="noopener">Ver mapa</a>
+      </div>
     </article>
 
   </div>
@@ -239,7 +255,7 @@
           </li>
         </ol>
       </div>
-      <p class="itinerary-hint">deslízate para ver el itinerario completo →</p>
+      <p class="itinerary-hint">toca para pausar el recorrido</p>
     </div>
   </div>
 
@@ -260,19 +276,30 @@
   </div>
   <p class="gift-text">Nuestro mejor regalo es compartir contigo este gran día. Si deseas obsequiarnos algo, te sugerimos la siguiente opción:</p>
   <p class="gift-highlight">Lluvia de sobres</p>
+  <div class="envelope-icon" aria-hidden="true">
+    <svg viewBox="0 0 80 56">
+      <rect x="3" y="3" width="74" height="50" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M5 6 L40 34 L75 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
   <p class="gift-note">(Habrá una urna discreta en la entrada de la recepción en nuestro gran día)</p>
 </section>
 
 <!-- ============ FOOTER ============ -->
 <footer class="section footer-section">
   <div class="monogram small" aria-hidden="true">
-    <svg viewBox="0 0 220 140" class="monogram-svg">
-      <text x="50" y="95" class="mono-letter mono-a">A</text>
-      <text x="118" y="60" class="mono-letter mono-amp">&amp;</text>
-      <text x="150" y="105" class="mono-letter mono-c">C</text>
+    <svg viewBox="0 0 220 160" class="monogram-svg">
+      <!-- A grande izquierda -->
+      <text x="8" y="138" class="mono-letter mono-a" style="font-size:130px; fill:var(--ink-blue); opacity:0.9;">A</text>
+      <!-- & cursivo al centro, superpuesto -->
+      <text x="80" y="108" class="mono-letter mono-amp" style="font-size:52px; fill:var(--dusk-blue); opacity:0.95;">&amp;</text>
+      <!-- E grande derecha -->
+      <text x="108" y="138" class="mono-letter mono-c" style="font-size:130px; fill:var(--ink-blue); opacity:0.9;">E</text>
+      <!-- Fecha pequeña debajo -->
+      <text x="110" y="155" text-anchor="middle" style="font-family:var(--display); font-size:9px; fill:var(--dusk-blue); letter-spacing:3px;">18 · 09 · 2026</text>
     </svg>
   </div>
-  <p class="footer-names">Aleiny &amp; César Elián</p>
+  <p class="footer-names">Aleiny Monserrat &amp; César Elián</p>
   <p class="footer-date">18 de Septiembre, 2026</p>
   <p class="footer-thanks">Con todo nuestro amor, gracias por ser parte de esta historia.</p>
 </footer>

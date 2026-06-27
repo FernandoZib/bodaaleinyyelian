@@ -129,6 +129,82 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if(msgSection) twObserver.observe(msgSection);
 
+  /* ---------- Itinerario: recorrido automático con retroceso rápido ---------- */
+  const itineraryScroll = document.querySelector('.itinerary-scroll');
+  const itineraryTrack = document.querySelector('.itinerary-track');
+
+  if (itineraryTrack && itineraryScroll){
+    const PIXELS_PER_SECOND = 36;  // velocidad del recorrido de ida (lento)
+    const PAUSE_SECONDS = 0.9;     // pausa breve al llegar al último elemento
+    const REWIND_SECONDS = 1.1;    // duración del retroceso rápido al inicio
+
+    let styleTag = document.getElementById('itinerary-dynamic-keyframes');
+    if (!styleTag){
+      styleTag = document.createElement('style');
+      styleTag.id = 'itinerary-dynamic-keyframes';
+      document.head.appendChild(styleTag);
+    }
+
+    function setupItineraryAnimation(){
+      // Distancia necesaria para que el último elemento llegue al borde derecho
+      const distance = Math.max(itineraryTrack.scrollWidth - itineraryScroll.clientWidth, 0);
+
+      if (distance <= 0){
+        itineraryTrack.style.animation = 'none';
+        return;
+      }
+
+      itineraryTrack.style.setProperty('--scroll-distance', distance + 'px');
+
+      const forwardDuration = distance / PIXELS_PER_SECOND;
+      const totalDuration = forwardDuration + PAUSE_SECONDS + REWIND_SECONDS;
+
+      const forwardEndPct = (forwardDuration / totalDuration) * 100;
+      const pauseEndPct = ((forwardDuration + PAUSE_SECONDS) / totalDuration) * 100;
+
+      styleTag.textContent = `
+        @keyframes itinerary-auto-scroll {
+          0% { transform: translateX(0); }
+          ${forwardEndPct.toFixed(3)}% { transform: translateX(calc(-1 * var(--scroll-distance))); }
+          ${pauseEndPct.toFixed(3)}% { transform: translateX(calc(-1 * var(--scroll-distance))); }
+          100% { transform: translateX(0); }
+        }
+      `;
+
+      itineraryTrack.style.animationDuration = totalDuration + 's';
+    }
+
+    setupItineraryAnimation();
+    window.addEventListener('resize', setupItineraryAnimation);
+
+    // Pausar al interactuar (touch/mouse) y reanudar al soltar
+    const pause = () => itineraryTrack.classList.add('is-paused');
+    const resume = () => itineraryTrack.classList.remove('is-paused');
+
+    itineraryScroll.addEventListener('mouseenter', pause);
+    itineraryScroll.addEventListener('mouseleave', resume);
+    itineraryScroll.addEventListener('touchstart', pause, { passive: true });
+    itineraryScroll.addEventListener('touchend', resume);
+    itineraryScroll.addEventListener('touchcancel', resume);
+
+    // Solo iniciar el recorrido cuando la sección es visible (ahorra recursos)
+    const itinerarySection = document.getElementById('itinerario');
+    if (itinerarySection){
+      const itineraryObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting){
+            resume();
+          } else {
+            pause();
+          }
+        });
+      }, { threshold: 0.05 });
+      itineraryObserver.observe(itinerarySection);
+      // pausado hasta que entre en vista por primera vez
+      pause();
+    }
+  }
+
   /* ---------- Música de fondo ---------- */
   const music = document.getElementById('bgMusic');
   const soundToggle = document.getElementById('soundToggle');
