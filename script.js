@@ -63,30 +63,49 @@ document.addEventListener('DOMContentLoaded', () => {
   const twLines = document.querySelectorAll('.tw-line');
   let twStarted = false;
 
+  // Insertamos el texto completo invisible en cada línea para que el
+  // navegador calcule y pinte el layout real ANTES de la animación.
+  twLines.forEach(el => {
+    const text = el.dataset.text || '\u00A0';
+    const ghost = document.createElement('span');
+    ghost.className = 'tw-ghost';
+    ghost.textContent = text.trim() === '' ? '\u00A0' : text;
+    el.appendChild(ghost);
+    el.style.opacity = '1';
+  });
+
   function typewriterSequence(){
     if(twStarted) return;
     twStarted = true;
 
-    // cursor compartido
+    // Fijar la altura exacta de cada línea AHORA que el ghost ya fue
+    // renderizado, para que no cambie durante la escritura.
+    twLines.forEach(el => {
+      const h = el.getBoundingClientRect().height;
+      el.style.height = h + 'px';
+      el.style.overflow = 'hidden';
+    });
+
     const cursor = document.createElement('span');
     cursor.className = 'tw-cursor';
 
     let lineIndex = 0;
 
     function typeLine(lineEl, text, onDone){
-      lineEl.classList.add('typing');
-      lineEl.textContent = '';
-      lineEl.appendChild(cursor);
+      const ghost = lineEl.querySelector('.tw-ghost');
+      if(ghost) lineEl.removeChild(ghost);
 
-      // líneas de espacio: mostrar de inmediato sin escribir
       if(text.trim() === ''){
-        lineEl.textContent = ' ';
+        lineEl.textContent = '\u00A0';
         setTimeout(onDone, 300);
         return;
       }
 
+      lineEl.textContent = '';
+      lineEl.appendChild(cursor);
+
       let charIndex = 0;
-      const speed = 28; // ms por carácter
+      const speed = 28;
 
       function typeChar(){
         if(charIndex < text.length){
@@ -94,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
           charIndex++;
           setTimeout(typeChar, speed);
         } else {
-          // pausa al final de línea antes de pasar a la siguiente
           setTimeout(onDone, 420);
         }
       }
@@ -103,8 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function nextLine(){
       if(lineIndex >= twLines.length){
-        // quitar cursor al terminar
         if(cursor.parentNode) cursor.parentNode.removeChild(cursor);
+        // Liberar alturas fijas al terminar
+        twLines.forEach(el => { el.style.height = ''; el.style.overflow = ''; });
         return;
       }
       const el = twLines[lineIndex];
@@ -218,25 +237,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // interacción del usuario (por eso el botón de sonido).
 
   soundToggle.addEventListener('click', () => {
-    if (!music.querySelector('source').src){
-      // No hay pista configurada todavía
-      iconMuted.style.display = 'none';
-      iconSound.style.display = 'none';
-      soundToggle.style.opacity = '0.4';
-      soundToggle.title = 'Agrega tu canción en script.js / index.html';
-      return;
-    }
-
-    if (isPlaying){
-      music.pause();
-      iconSound.style.display = 'none';
-      iconMuted.style.display = 'block';
-    } else {
+    // Usar music.paused para detectar estado real (incluso si la música
+    // fue iniciada desde fuera, al abrir el sobre)
+    if (music.paused){
       music.play().catch(() => {});
       iconMuted.style.display = 'none';
       iconSound.style.display = 'block';
+      isPlaying = true;
+    } else {
+      music.pause();
+      iconSound.style.display = 'none';
+      iconMuted.style.display = 'block';
+      isPlaying = false;
     }
-    isPlaying = !isPlaying;
   });
 
 });

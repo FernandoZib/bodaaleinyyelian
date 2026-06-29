@@ -425,11 +425,13 @@ img {
   display: block;
   overflow: hidden;
   white-space: normal;
-  opacity: 0;
+  opacity: 1;        /* siempre visible: el ghost ocupa el espacio */
   min-height: 1.2em;
 }
-.tw-line.typing{
-  opacity: 1;
+/* Texto fantasma: reserva el espacio pero es invisible */
+.tw-ghost{
+  visibility: hidden;
+  display: inline;
 }
 .tw-cursor{
   display: inline-block;
