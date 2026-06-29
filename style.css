@@ -621,7 +621,7 @@ img {
 .events-section{
   max-width: 100%;
   padding: 90px 24px;
-  background: linear-gradient(170deg, var(--deep-blue), var(--ink-blue));
+  background: var(--pale-blue);
 }
 .event-cards{
   display:flex;
@@ -629,6 +629,8 @@ img {
   gap: 40px;
   max-width: 460px;
   margin: 40px auto 0;
+  border-radius: 17px;
+  background: linear-gradient(170deg, var(--deep-blue), var(--ink-blue));
 }
 .event-card{
   position: relative;
@@ -641,6 +643,7 @@ img {
     0 16px 30px rgba(8,16,26,0.35),
     0 36px 60px rgba(8,16,26,0.3);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
+
 }
 .event-card:hover,
 .event-card:active{
@@ -695,6 +698,7 @@ img {
   position: relative;
   padding: 30px 26px 34px;
   text-align: center;
+  background: linear-gradient(170deg, var(--deep-blue), var(--ink-blue));
 }
 .event-icon{
   display: inline-flex;
