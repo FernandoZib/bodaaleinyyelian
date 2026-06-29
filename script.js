@@ -16,15 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function pad(n){ return n.toString().padStart(2, '0'); }
 
+  function setWithFade(el, value){
+    if(el.textContent === value) return;
+    el.classList.remove('is-changing');
+    // forzar reflow para reiniciar la animación
+    void el.offsetWidth;
+    el.textContent = value;
+    el.classList.add('is-changing');
+  }
+
   function updateCountdown(){
     const now = Date.now();
     const diff = weddingDate - now;
 
     if (diff <= 0){
-      elDays.textContent = '00';
-      elHours.textContent = '00';
-      elMin.textContent = '00';
-      elSec.textContent = '00';
+      [elDays, elHours, elMin, elSec].forEach(el => setWithFade(el, '00'));
       return;
     }
 
@@ -33,10 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const mins  = Math.floor((diff / (1000 * 60)) % 60);
     const secs  = Math.floor((diff / 1000) % 60);
 
-    elDays.textContent  = pad(days);
-    elHours.textContent = pad(hours);
-    elMin.textContent   = pad(mins);
-    elSec.textContent   = pad(secs);
+    setWithFade(elDays,  pad(days));
+    setWithFade(elHours, pad(hours));
+    setWithFade(elMin,   pad(mins));
+    setWithFade(elSec,   pad(secs));
   }
 
   updateCountdown();

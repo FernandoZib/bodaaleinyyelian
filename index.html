@@ -179,22 +179,33 @@ body.envelope-open {
       <h2 class="countdown-title">¡Prepárate!</h2>
       <p class="countdown-subtitle">Nos vemos dentro de</p>
 
-      <div class="countdown-grid" id="countdown-timer">
-        <span class="cd-num" id="cd-days" style="grid-area:n1;">00</span>
-        <span class="cd-sep" style="grid-area:s1;">:</span>
-        <span class="cd-num" id="cd-hours" style="grid-area:n2;">00</span>
-        <span class="cd-sep" style="grid-area:s2;">:</span>
-        <span class="cd-num" id="cd-min" style="grid-area:n3;">00</span>
-        <span class="cd-sep" style="grid-area:s3;">:</span>
-        <span class="cd-num" id="cd-sec" style="grid-area:n4;">00</span>
+      <div class="countdown-ornament" aria-hidden="true">
+        <span class="countdown-ornament-diamond"></span>
+      </div>
 
-        <span class="cd-chevron cd-chevron-left" style="grid-area:cl;">&lsaquo;</span>
-        <span class="cd-label" style="grid-area:l1;">Días</span>
-        <span class="cd-label" style="grid-area:l2;">Horas</span>
-        <span class="cd-label" style="grid-area:l3;">Minutos</span>
-        <span class="cd-label" style="grid-area:l4;">Segundos</span>
-        <span class="cd-chevron cd-chevron-right" style="grid-area:cr;">&rsaquo;</span>
-      </div>     
+      <div class="countdown-grid" id="countdown-timer">
+        <div class="cd-unit">
+          <div class="cd-box"><span class="cd-num" id="cd-days">00</span></div>
+          <span class="cd-label">Días</span>
+        </div>
+        <span class="cd-sep">·</span>
+        <div class="cd-unit">
+          <div class="cd-box"><span class="cd-num" id="cd-hours">00</span></div>
+          <span class="cd-label">Horas</span>
+        </div>
+        <span class="cd-sep">·</span>
+        <div class="cd-unit">
+          <div class="cd-box"><span class="cd-num" id="cd-min">00</span></div>
+          <span class="cd-label">Min</span>
+        </div>
+        <span class="cd-sep">·</span>
+        <div class="cd-unit">
+          <div class="cd-box"><span class="cd-num" id="cd-sec">00</span></div>
+          <span class="cd-label">Seg</span>
+        </div>
+      </div>
+
+      
     </div>
 
   </div>

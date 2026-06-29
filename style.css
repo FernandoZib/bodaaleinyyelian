@@ -327,71 +327,133 @@ img {
   width: calc(100% - 14px);
   background: var(--paper);
   border-radius: 28px;
-  padding: 52px 36px 42px;
+  padding: 52px 28px 44px;
   box-shadow: 0 18px 40px rgba(15,30,45,0.28);
   text-align:center;
   z-index: 2;
+  overflow: hidden;
+}
+/* Línea decorativa superior dorada */
+.countdown-card::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 80px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-mist), transparent);
+  border-radius: 2px;
 }
 .countdown-title{
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: clamp(1.9rem, 7vw, 2.5rem);
-  letter-spacing: 0.16em;
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 8vw, 2.9rem);
+  letter-spacing: 0.04em;
   color: var(--deep-blue);
-  text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 .countdown-subtitle{
   font-family: var(--display);
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
+  font-size: 0.68rem;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
   color: var(--dusk-blue);
   margin-bottom: 26px;
 }
+/* Fade keyframe para el cambio de dígitos */
+@keyframes cd-fade-in{
+  0%   { opacity: 0; transform: translateY(-8px) scale(0.94); }
+  100% { opacity: 1; transform: translateY(0)    scale(1); }
+}
+.cd-num.is-changing{
+  animation: cd-fade-in 0.32s cubic-bezier(0.22,0.68,0,1.2) forwards;
+}
+
+/* Ornamento separador */
+.countdown-ornament{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 28px;
+  color: var(--gold-mist);
+  opacity: 0.7;
+}
+.countdown-ornament::before,
+.countdown-ornament::after{
+  content: "";
+  flex: 1;
+  max-width: 56px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-mist));
+}
+.countdown-ornament::after{
+  background: linear-gradient(90deg, var(--gold-mist), transparent);
+}
+.countdown-ornament-diamond{
+  width: 5px; height: 5px;
+  background: var(--gold-mist);
+  transform: rotate(45deg);
+  border-radius: 1px;
+}
+
+/* Grid de cajas de dígitos */
 .countdown-grid{
-  display: grid;
-  grid-template-columns: auto 1fr auto 1fr auto 1fr auto 1fr auto;
-  grid-template-areas:
-    ".  n1 s1 n2 s2 n3 s3 n4 .  "
-    "cl l1 .  l2 .  l3 .  l4 cr ";
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.cd-unit{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.cd-box{
+  background: linear-gradient(160deg, var(--pale-blue) 0%, #dce8f2 100%);
+  border: 1px solid rgba(111,143,172,0.22);
+  border-radius: 14px;
+  min-width: clamp(56px, 15vw, 70px);
+  aspect-ratio: 1 / 1;
+  display: flex;
   align-items: center;
   justify-content: center;
-  column-gap: 4px;
-  row-gap: 10px;
-  margin-bottom: 28px;
+  box-shadow:
+    0 4px 14px rgba(44,74,104,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.7);
 }
 .cd-num{
-  grid-row: 1;
   font-family: var(--serif);
   font-weight: 500;
-  font-size: clamp(2.2rem, 9vw, 2.9rem);
-  color: var(--ink-blue);
+  font-size: clamp(2rem, 8.5vw, 2.7rem);
+  color: var(--deep-blue);
   line-height: 1;
   text-align: center;
-}
-.cd-sep{
-  grid-row: 1;
-  font-family: var(--serif);
-  font-size: clamp(1.6rem, 6vw, 2rem);
-  color: var(--powder);
-  text-align: center;
+  display: block;
+  letter-spacing: 0.03em;
 }
 .cd-label{
   font-family: var(--display);
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--text-soft);
+  color: var(--dusk-blue);
   text-align: center;
   white-space: nowrap;
+  opacity: 0.85;
 }
-.cd-chevron{
-  color: var(--dusk-blue);
-  font-size: 1rem;
-  opacity: 0.7;
-  align-self: center;
+/* Separador puntual entre cajas */
+.cd-sep{
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 5vw, 1.8rem);
+  color: var(--gold-mist);
+  line-height: 1;
+  margin-top: 14px;
+  opacity: 0.75;
+  flex-shrink: 0;
 }
+.cd-chevron{ display: none; }
 .countdown-note{
   font-size: 0.86rem;
   line-height: 1.7;
