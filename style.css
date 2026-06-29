@@ -803,7 +803,7 @@ img {
   position: relative;
   width: 86%;
   max-width: 860px;
-  background: var(--paper);
+  background: var(--pale-blue);
   padding: 40px 0;
   text-align: center;
   display: flex;
@@ -1005,7 +1005,7 @@ img {
   display:flex;
   align-items:center;
   justify-content:center;
-  background: var(--paper);
+  background: var(--pale-blue);
   color: var(--ink-blue);
   margin-bottom: 14px;
 }
