@@ -460,21 +460,34 @@ img {
 .family-card{
   background: var(--paper);
   border: 1px solid var(--powder);
-  padding: 26px 18px;
-  border-radius: 2px;
+  padding: 32px 22px 28px;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(44,74,104,0.08);
+  position: relative;
+  overflow: hidden;
+}
+.family-card::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--powder), var(--dusk-blue), var(--powder));
+  opacity: 0.6;
 }
 .family-role{
   font-family: var(--display);
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--dusk-blue);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--powder);
 }
 .family-card p{
-  font-size: 1.02rem;
+  font-size: 1.05rem;
   color: var(--text-dark);
-  line-height: 1.7;
+  line-height: 1.8;
 }
 .padrinos-card{ max-width: 360px; margin: 0 auto; }
 .rip{ color: var(--text-soft); font-style: italic; font-size: 0.9em; }
@@ -632,12 +645,12 @@ img {
 /* ---- Tarjeta dress code: azul claro con textos azul oscuro ---- */
 .dresscode-card{
   position: relative;
-  width: 100%;
-  max-width: 290px;
+  width: calc(100% - 32px);
+  max-width: 380px;
   background: var(--pale-blue);
   border: 1px solid var(--powder);
   border-radius: 50% 50% 22px 22px / 110px 110px 22px 22px;
-  padding: 70px 28px 48px;
+  padding: 70px 36px 48px;
   text-align: center;
   box-shadow: 0 12px 36px rgba(15,30,45,0.18);
   margin-bottom: 0;
@@ -668,6 +681,7 @@ img {
   flex-direction: column;
   align-items: center;
   box-shadow: 0 6px 28px rgba(15,30,45,0.45);
+  border-radius: 18px;
 }
 
 /* Triángulo izquierdo: recorta esquina izquierda hacia adentro */
@@ -723,7 +737,7 @@ img {
 .dresscode-title{
   font-family: var(--display);
   font-weight: 600;
-  font-size: clamp(1.3rem, 5vw, 1.7rem);
+  font-size: clamp(1.5rem, 6vw, 2rem);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--deep-blue);
@@ -731,7 +745,7 @@ img {
 }
 .dresscode-subtitle{
   font-family: var(--display);
-  font-size: 0.68rem;
+  font-size: 0.98rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--dusk-blue);
@@ -747,7 +761,7 @@ img {
 }
 .dress-icon{ width: 46px; height: auto; }
 .dresscode-roles{
-  font-size: 0.88rem;
+  font-size: 1.12rem;
   color: var(--text-dark);
   margin-bottom: 16px;
   line-height: 1.7;
@@ -761,8 +775,8 @@ img {
   margin: 0 auto 16px;
 }
 .dresscode-note{
-  font-size: 0.82rem;
-  line-height: 1.7;
+  font-size: 1.06rem;
+  line-height: 1.8;
   color: var(--text-soft);
 }
 .dresscode-note strong{ color: var(--ink-blue); }
@@ -857,8 +871,8 @@ img {
 .it-icon{
   position: relative;
   z-index: 1;
-  width: 48px;
-  height: 48px;
+  width: 64px;
+  height: 64px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -880,7 +894,7 @@ img {
 }
 .it-time{
   font-family: var(--display);
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   letter-spacing: 0.08em;
   color: var(--dusk-blue);
   margin-bottom: 6px;
@@ -888,7 +902,7 @@ img {
   white-space: nowrap;
 }
 .it-label{
-  font-size: 0.82rem;
+  font-size: 0.93rem;
   color: var(--text-dark);
   line-height: 1.35;
   white-space: nowrap;
@@ -909,21 +923,44 @@ img {
 .gift-icon svg{ width:100%; height:auto; }
 .gift-text{
   font-size: 1.02rem;
-  line-height: 1.75;
+  line-height: 1.85;
   color: var(--text-dark);
-  margin-bottom: 14px;
+  margin-bottom: 28px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Caja destacada para "lluvia de sobres" */
+.gift-box{
+  background: var(--paper);
+  border: 1px solid var(--powder);
+  border-radius: 18px;
+  padding: 32px 28px 28px;
+  margin: 0 auto 12px;
+  max-width: 340px;
+  box-shadow: 0 6px 24px rgba(44,74,104,0.09);
+  position: relative;
+}
+.gift-box::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60px; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--dusk-blue), transparent);
+  border-radius: 2px;
 }
 .gift-highlight{
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.5rem;
+  font-family: var(--script);
+  font-size: 2rem;
   color: var(--ink-blue);
-  margin-bottom: 6px;
+  margin-bottom: 10px;
+  display: block;
 }
 .envelope-icon{
-  width: 52px;
-  margin: 4px auto 18px;
-  color: var(--ink-blue);
+  width: 58px;
+  margin: 0 auto 14px;
+  color: var(--dusk-blue);
   transform-origin: 50% 8%;
   animation: envelope-shake 2.6s ease-in-out infinite;
 }
