@@ -78,6 +78,15 @@ img {
   margin-bottom: 18px;
 }
 
+.eyebrowh{
+  font-family: var(--display);
+  font-size: 1.2rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--dusk-blue);
+  margin-bottom: 18px;
+}
+
 .eyebrow2{
   font-family: var(--display);
   font-size: 1.2rem;
