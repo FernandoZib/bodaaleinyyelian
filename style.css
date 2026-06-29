@@ -14,6 +14,9 @@
   --gold-mist:  #b9a98a;
   --text-dark:  #2c3640;
   --text-soft:  #5a6a78;
+  --gold:       #C9A84C;
+  --gold-lt:    #E8D09A;
+  --gold-dk:    #8B6914;
 
   --serif: 'Cormorant Garamond', 'Times New Roman', serif;
   --display: 'Cinzel', var(--serif);
@@ -67,11 +70,29 @@ img {
 
 .eyebrow{
   font-family: var(--display);
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--dusk-blue);
   margin-bottom: 18px;
+}
+
+.eyebrow2{
+  font-family: var(--display);
+  font-size: 1.2rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--dusk-blue);
+  margin-bottom: 18px;
+  text-shadow:
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000,
+                -1px 0px 0 #000,
+                1px 0px 0 #000,
+                0px -1px 0 #000,
+                0px 1px 0 #000;
 }
 .eyebrow-light{ color: rgba(255,255,255,0.78); }
 
@@ -510,6 +531,15 @@ img {
 }
 
 /* ===================== FAMILY ===================== */
+
+.family-section{
+  background-image: url(fondop.webp);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+
 .family-grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
@@ -527,6 +557,7 @@ img {
   box-shadow: 0 4px 18px rgba(44,74,104,0.08);
   position: relative;
   overflow: hidden;
+  opacity: 0.8;
 }
 .family-card::before{
   content: "";
@@ -538,7 +569,7 @@ img {
 }
 .family-role{
   font-family: var(--display);
-  font-size: 0.65rem;
+  font-size: 1rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--dusk-blue);
@@ -547,12 +578,42 @@ img {
   border-bottom: 1px solid var(--powder);
 }
 .family-card p{
-  font-size: 1.05rem;
+  font-size: 1.35rem;
   color: var(--text-dark);
   line-height: 1.8;
 }
 .padrinos-card{ max-width: 360px; margin: 0 auto; }
-.rip{ color: var(--text-soft); font-style: italic; font-size: 0.9em; }
+.rip{ color: black; font-size: 0.9em; }
+
+/* ===================== PADRINOS ROW ===================== */
+.padrinos-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Centra verticalmente el & con los nombres */
+  gap: 12px; /* Espacio entre los nombres y el símbolo */
+  margin-top: 10px;
+}
+
+.padrinos-row .padrino-nombre {
+  flex: 1; /* Obliga a que ambos nombres ocupen exactamente el mismo espacio (50%) */
+  margin: 0; 
+  line-height: 1.4; /* Reducimos un poco el interlineado por si el texto salta de línea en móviles */
+}
+
+.align-right {
+  text-align: center;  
+}
+
+.align-left {
+  text-align: center;
+}
+
+.padrino-ampersand {
+  font-size: 1.8rem;
+  color: var(--dusk-blue); /* Usa el mismo color que tus subtítulos para mantener armonía */
+  font-family: var(--display);
+  flex: 0 0 auto; /* Evita que el símbolo se encoja */
+}
 
 /* ===================== EVENTS ===================== */
 .events-section{
