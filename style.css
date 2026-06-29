@@ -71,7 +71,7 @@ img {
 
 .eyebrow{
   font-family: var(--display);
-  font-size: 1.2rem;
+  font-size: 2rem;
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--dusk-blue);
