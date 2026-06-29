@@ -27,6 +27,7 @@
 
 *{ margin:0; padding:0; box-sizing:border-box; }
 
+
 html{ scroll-behavior:smooth;}
 
 body{
@@ -533,10 +534,11 @@ img {
 /* ===================== FAMILY ===================== */
 
 .family-section{
-  background-image: url(fondop.webp);
+  background-image: url(fondop.jpg);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+
 }
 
 
