@@ -230,6 +230,179 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  /* ---------- Galería automática + modal ---------- */
+  const galleryStage = document.getElementById('galleryStage');
+  const galleryDotsWrap = document.getElementById('galleryDots');
+
+  if (galleryStage && galleryDotsWrap){
+    const galleryItems = Array.from(galleryStage.querySelectorAll('.gallery-item'));
+    const GALLERY_INTERVAL = 5000; // 5 segundos por imagen
+    let galleryIndex = 0;
+    let galleryTimer = null;
+    let galleryRunning = false;
+
+    // Ajustar el tamaño/forma del marco polaroid según la orientación real de cada foto
+    galleryItems.forEach(item => {
+      const img = item.querySelector('img');
+      const polaroid = item.querySelector('.polaroid');
+      if (!img || !polaroid) return;
+
+      function applyOrientation(){
+        const w = img.naturalWidth;
+        const h = img.naturalHeight;
+        if (!w || !h) return;
+        const ratio = w / h;
+        polaroid.classList.remove('is-portrait', 'is-landscape', 'is-square');
+        if (ratio > 1.12){
+          polaroid.classList.add('is-landscape');
+        } else if (ratio < 0.88){
+          polaroid.classList.add('is-portrait');
+        } else {
+          polaroid.classList.add('is-square');
+        }
+      }
+
+      if (img.complete && img.naturalWidth){
+        applyOrientation();
+      } else {
+        img.addEventListener('load', applyOrientation);
+      }
+    });
+
+    // Crear los puntos indicadores
+    galleryItems.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'gdot' + (i === 0 ? ' is-active' : '');
+      galleryDotsWrap.appendChild(dot);
+    });
+    const galleryDots = Array.from(galleryDotsWrap.children);
+
+    function showGallerySlide(i){
+      galleryItems.forEach((item, idx) => {
+        item.classList.toggle('is-active', idx === i);
+      });
+      galleryDots.forEach((dot, idx) => {
+        dot.classList.toggle('is-active', idx === i);
+      });
+    }
+
+    function nextGallerySlide(){
+      galleryIndex = (galleryIndex + 1) % galleryItems.length;
+      showGallerySlide(galleryIndex);
+    }
+
+    function startGallery(){
+      if (galleryRunning) return;
+      galleryRunning = true;
+      galleryTimer = setInterval(nextGallerySlide, GALLERY_INTERVAL);
+    }
+
+    function stopGallery(){
+      galleryRunning = false;
+      clearInterval(galleryTimer);
+    }
+
+    // Iniciar solo cuando la sección entra en pantalla; pausar al salir
+    const gallerySection = document.getElementById('galeria');
+    if (gallerySection){
+      const galleryObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting){
+            startGallery();
+          } else {
+            stopGallery();
+          }
+        });
+      }, { threshold: 0.3 });
+      galleryObserver.observe(gallerySection);
+    }
+
+    /* ----- Modal de galería con navegación ----- */
+    const modal = document.getElementById('galleryModal');
+    const modalImg = document.getElementById('galleryModalImg');
+    const modalCaption = document.getElementById('galleryModalCaption');
+    const modalCounter = document.getElementById('galleryModalCounter');
+    const modalClose = document.getElementById('galleryModalClose');
+    const modalBackdrop = document.getElementById('galleryModalBackdrop');
+    const modalPrev = document.getElementById('galleryModalPrev');
+    const modalNext = document.getElementById('galleryModalNext');
+
+    let modalIndex = 0;
+
+    function renderModalSlide(){
+      const item = galleryItems[modalIndex];
+      const img = item.querySelector('img');
+      modalImg.src = img.src;
+      modalImg.alt = img.alt || '';
+      modalCaption.textContent = item.dataset.caption || '';
+      modalCounter.textContent = (modalIndex + 1) + ' / ' + galleryItems.length;
+    }
+
+    function openModal(index){
+      modalIndex = index;
+      renderModalSlide();
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      stopGallery();
+    }
+
+    function closeModal(){
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      // Sincronizar la galería de fondo con la foto en la que se quedó el modal
+      galleryIndex = modalIndex;
+      showGallerySlide(galleryIndex);
+      startGallery();
+    }
+
+    function modalPrevSlide(){
+      modalIndex = (modalIndex - 1 + galleryItems.length) % galleryItems.length;
+      renderModalSlide();
+    }
+
+    function modalNextSlide(){
+      modalIndex = (modalIndex + 1) % galleryItems.length;
+      renderModalSlide();
+    }
+
+    // Abrir modal al hacer clic en la foto activa
+    galleryItems.forEach((item, i) => {
+      item.addEventListener('click', () => {
+        if (!item.classList.contains('is-active')) return;
+        openModal(i);
+      });
+    });
+
+    modalClose.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', closeModal);
+    modalPrev.addEventListener('click', modalPrevSlide);
+    modalNext.addEventListener('click', modalNextSlide);
+
+    document.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('is-open')) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft') modalPrevSlide();
+      if (e.key === 'ArrowRight') modalNextSlide();
+    });
+
+    // Deslizar con el dedo en móvil para navegar dentro del modal
+    let touchStartX = null;
+    modal.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+
+    modal.addEventListener('touchend', (e) => {
+      if (touchStartX === null) return;
+      const diff = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(diff) > 40){
+        diff > 0 ? modalPrevSlide() : modalNextSlide();
+      }
+      touchStartX = null;
+    }, { passive: true });
+  }
+
   /* ---------- Música de fondo ---------- */
   const music = document.getElementById('bgMusic');
   const soundToggle = document.getElementById('soundToggle');

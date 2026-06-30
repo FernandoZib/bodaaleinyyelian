@@ -1178,3 +1178,290 @@ img {
 @media (max-width: 420px){
   .section{ padding: 70px 22px; }
 }
+
+/* ===================== GALERÍA ===================== */
+.gallery-section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery-stage{
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  min-height: 420px;
+  margin: 40px auto 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-item{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.92) rotate(var(--gr, 0deg));
+  pointer-events: none;
+  transition: opacity 1.2s ease, transform 5.6s ease;
+}
+
+.gallery-item.is-active{
+  opacity: 1;
+  transform: scale(1) rotate(var(--gr, 0deg));
+  z-index: 2;
+  pointer-events: auto;
+}
+
+/* Marco polaroid: el tamaño lo define JS según la orientación real de la imagen */
+.gallery-item .polaroid{
+  position: relative;
+  background: linear-gradient(160deg, #fffdf8 0%, var(--paper) 60%);
+  padding: 18px 18px 60px;
+  border-radius: 3px;
+  box-shadow:
+    0 22px 48px rgba(31,54,80,0.30),
+    0 4px 10px rgba(31,54,80,0.16),
+    inset 0 0 0 1px rgba(185,169,138,0.35);
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  height: 320px;
+  transition: width 0.5s ease, height 0.5s ease, transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: zoom-in;
+}
+
+.gallery-item.is-active .polaroid:hover{
+  transform: translateY(-4px) rotate(var(--gr, 0deg));
+  box-shadow:
+    0 28px 56px rgba(31,54,80,0.34),
+    0 6px 14px rgba(31,54,80,0.2),
+    inset 0 0 0 1px rgba(185,169,138,0.5);
+}
+
+/* Variantes de tamaño según orientación real de la imagen (asignadas por JS) */
+.gallery-item .polaroid.is-portrait{
+  width: 270px;
+  height: 370px;
+}
+
+.gallery-item .polaroid.is-landscape{
+  width: 330px;
+  height: 300px;
+}
+
+.gallery-item .polaroid.is-square{
+  width: 320px;
+  height: 320px;
+}
+
+.gallery-item .polaroid-photo{
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  background: #ece7da;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 0 1px rgba(44,74,104,0.08);
+}
+
+.gallery-item .polaroid-photo img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transform: scale(1);
+  transition: transform 5.6s ease;
+}
+
+.gallery-item.is-active .polaroid-photo img{
+  transform: scale(1.06);
+}
+
+.gallery-item .polaroid-caption{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  text-align: center;
+  font-family: var(--script);
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--ink-blue);
+  letter-spacing: 0.01em;
+}
+
+/* Pequeñas rotaciones alternadas para look más natural de pila de fotos */
+.gallery-item:nth-child(6n+1){ --gr: -3deg; }
+.gallery-item:nth-child(6n+2){ --gr: 2.4deg; }
+.gallery-item:nth-child(6n+3){ --gr: -1.6deg; }
+.gallery-item:nth-child(6n+4){ --gr: 3deg; }
+.gallery-item:nth-child(6n+5){ --gr: -2.2deg; }
+.gallery-item:nth-child(6n+6){ --gr: 1.4deg; }
+
+.gallery-dots{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px;
+  max-width: 320px;
+  margin: 6px auto 0;
+}
+
+.gallery-dots .gdot{
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(111,143,172,0.35);
+  transition: background 0.4s ease, transform 0.4s ease;
+}
+
+.gallery-dots .gdot.is-active{
+  background: var(--ink-blue);
+  transform: scale(1.5);
+}
+
+@media (max-width: 420px){
+  .gallery-stage{ max-width: 320px; min-height: 360px; }
+  .gallery-item .polaroid{ width: 270px; height: 270px; }
+  .gallery-item .polaroid.is-portrait{ width: 230px; height: 320px; }
+  .gallery-item .polaroid.is-landscape{ width: 280px; height: 255px; }
+  .gallery-item .polaroid.is-square{ width: 270px; height: 270px; }
+}
+
+/* ===================== MODAL GALERÍA ===================== */
+.gallery-modal{
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.gallery-modal.is-open{
+  opacity: 1;
+  visibility: visible;
+}
+
+.gallery-modal-backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(20,32,46,0.92);
+  backdrop-filter: blur(3px);
+}
+
+.gallery-modal-content{
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 56px;
+}
+
+.gm-figure{
+  margin: 0;
+  max-width: min(620px, 86vw);
+  max-height: 78vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0.94);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.gallery-modal.is-open .gm-figure{
+  transform: scale(1);
+  opacity: 1;
+}
+
+.gm-figure img{
+  max-width: 100%;
+  max-height: 68vh;
+  object-fit: contain;
+  border: 8px solid var(--paper);
+  border-radius: 2px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+  background: #ece7da;
+}
+
+.gm-figure figcaption{
+  margin-top: 18px;
+  font-family: var(--script);
+  font-size: 1.5rem;
+  color: var(--paper);
+  text-align: center;
+}
+
+.gm-close,
+.gm-nav{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.28);
+  color: var(--paper);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+}
+
+.gm-close:hover,
+.gm-nav:hover{
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.5);
+}
+
+.gm-close{
+  top: 22px;
+  right: 22px;
+  width: 40px;
+  height: 40px;
+}
+
+.gm-nav{
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+}
+
+.gm-nav:active{ transform: translateY(-50%) scale(0.92); }
+
+.gm-prev{ left: 16px; }
+.gm-next{ right: 16px; }
+
+.gm-counter{
+  position: absolute;
+  bottom: 22px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--display);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
+@media (max-width: 560px){
+  .gallery-modal-content{ padding: 60px 14px; }
+  .gm-nav{ width: 40px; height: 40px; }
+  .gm-prev{ left: 4px; }
+  .gm-next{ right: 4px; }
+  .gm-figure img{ max-height: 60vh; }
+  .gm-figure figcaption{ font-size: 1.25rem; }
+}

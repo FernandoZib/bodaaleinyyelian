@@ -380,6 +380,53 @@ body.envelope-open {
 
 </div>
 
+<!-- ============ GALERÍA ============ -->
+<section class="section gallery-section" id="galeria">
+  <div class="divider-leaf" aria-hidden="true">
+    <svg viewBox="0 0 120 24"><path d="M0 12 H45" /><path d="M75 12 H120" /><path d="M60 12 c-6 -10 -18 -10 -18 0 c0 10 12 10 18 0 c6 -10 18 -10 18 0 c0 10 -12 10 -18 0" /></svg>
+  </div>
+  <p class="eyebrow">Nuestros momentos</p>
+  <h2 class="section-title">Galería</h2>
+
+  <div class="gallery-stage" id="galleryStage">
+    <div class="gallery-item is-active" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto1.jpg" alt="Foto 1"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
+    <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto2.jpg" alt="Foto 2"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
+    <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto3.jpg" alt="Foto 3"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
+    <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto4.jpg" alt="Foto 4"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
+    <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto5.jpg" alt="Foto 5"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
+    <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto6.jpg" alt="Foto 6"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
+    <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto7.jpg" alt="Foto 7"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
+    <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto8.jpg" alt="Foto 8"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
+    <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto9.jpg" alt="Foto 9"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
+    <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto10.jpg" alt="Foto 10"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
+    <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto11.jpg" alt="Foto 11"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
+    <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto12.jpg" alt="Foto 12"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
+  </div>
+
+  <div class="gallery-dots" id="galleryDots" aria-hidden="true"></div>
+</section>
+
+<!-- ============ MODAL GALERÍA ============ -->
+<div class="gallery-modal" id="galleryModal" aria-hidden="true">
+  <div class="gallery-modal-backdrop" id="galleryModalBackdrop"></div>
+  <div class="gallery-modal-content">
+    <button type="button" class="gm-close" id="galleryModalClose" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 5 L19 19 M19 5 L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>
+    </button>
+    <button type="button" class="gm-nav gm-prev" id="galleryModalPrev" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M15 4 L7 12 L15 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </button>
+    <figure class="gm-figure">
+      <img id="galleryModalImg" src="" alt="">
+      <figcaption id="galleryModalCaption"></figcaption>
+    </figure>
+    <button type="button" class="gm-nav gm-next" id="galleryModalNext" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M9 4 L17 12 L9 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </button>
+    <p class="gm-counter" id="galleryModalCounter"></p>
+  </div>
+</div>
+
 <!-- ============ MESA DE REGALOS ============ -->
 <section class="section gift-section" id="regalo">
   <div class="divider-leaf" aria-hidden="true">
