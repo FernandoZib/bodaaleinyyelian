@@ -230,46 +230,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /* ---------- Galería automática + modal ---------- */
-  const galleryStage = document.getElementById('galleryStage');
+  /* ---------- Galería en grid + zoom centrado secuencial + modal ---------- */
+  const galleryGrid = document.getElementById('galleryGrid');
   const galleryDotsWrap = document.getElementById('galleryDots');
+  const spotlightBackdrop = document.getElementById('gallerySpotlightBackdrop');
+  const pauseBtn = document.getElementById('galleryPauseBtn');
 
-  if (galleryStage && galleryDotsWrap){
-    const galleryItems = Array.from(galleryStage.querySelectorAll('.gallery-item'));
-    const GALLERY_INTERVAL = 5000; // 5 segundos por imagen
+  if (galleryGrid && galleryDotsWrap && spotlightBackdrop){
+    const galleryItems = Array.from(galleryGrid.querySelectorAll('.gallery-item'));
+    const ZOOM_DURATION = 5000;     // 5 segundos de protagonismo por foto
+    const TRAVEL_DURATION = 900;    // duración del viaje hacia/desde el centro
     let galleryIndex = 0;
     let galleryTimer = null;
     let galleryRunning = false;
+    let isPaused = false;           // true cuando el usuario pausó el recorrido manualmente
+    let currentSpotlighted = null;  // { item, polaroid, placeholder }
 
-    // Ajustar el tamaño/forma del marco polaroid según la orientación real de cada foto
-    galleryItems.forEach(item => {
-      const img = item.querySelector('img');
-      const polaroid = item.querySelector('.polaroid');
-      if (!img || !polaroid) return;
-
-      function applyOrientation(){
-        const w = img.naturalWidth;
-        const h = img.naturalHeight;
-        if (!w || !h) return;
-        const ratio = w / h;
-        polaroid.classList.remove('is-portrait', 'is-landscape', 'is-square');
-        if (ratio > 1.12){
-          polaroid.classList.add('is-landscape');
-        } else if (ratio < 0.88){
-          polaroid.classList.add('is-portrait');
-        } else {
-          polaroid.classList.add('is-square');
-        }
-      }
-
-      if (img.complete && img.naturalWidth){
-        applyOrientation();
-      } else {
-        img.addEventListener('load', applyOrientation);
-      }
-    });
-
-    // Crear los puntos indicadores
+    // Crear los puntos indicadores (uno por foto, muestran cuál está en turno)
     galleryItems.forEach((_, i) => {
       const dot = document.createElement('span');
       dot.className = 'gdot' + (i === 0 ? ' is-active' : '');
@@ -277,44 +254,183 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     const galleryDots = Array.from(galleryDotsWrap.children);
 
-    function showGallerySlide(i){
-      galleryItems.forEach((item, idx) => {
-        item.classList.toggle('is-active', idx === i);
+    // Mueve la polaroid al <body> y la traslada/escala hasta el centro de la pantalla
+    function spotlightItem(item){
+      const polaroid = item.querySelector('.polaroid');
+      if (!polaroid) return;
+
+      const rect = polaroid.getBoundingClientRect();
+
+      // Reservar el espacio en el grid mientras la foto está fuera de su lugar
+      item.style.minHeight = rect.height + 'px';
+
+      // Marcador invisible que indica dónde regresar la polaroid al terminar
+      const placeholder = document.createComment('gallery-placeholder');
+      polaroid.parentNode.insertBefore(placeholder, polaroid);
+
+      // Reubicar la polaroid directamente en <body> para que el position:fixed
+      // sea relativo a la ventana (y no a un ancestro con transform, como .section)
+      document.body.appendChild(polaroid);
+
+      polaroid.style.position = 'fixed';
+      polaroid.style.top = rect.top + 'px';
+      polaroid.style.left = rect.left + 'px';
+      polaroid.style.width = rect.width + 'px';
+      polaroid.style.height = rect.height + 'px';
+      polaroid.style.margin = '0';
+      polaroid.style.zIndex = '500';
+      polaroid.style.transition = 'none';
+      polaroid.style.transform = 'translate(0px, 0px) scale(1)';
+      polaroid.classList.add('is-spotlighted');
+
+      // Forzar reflow antes de animar
+      void polaroid.offsetWidth;
+
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const targetWidth = Math.min(vw * 0.84, 440);
+      const scaleByWidth = targetWidth / rect.width;
+      const scaleByHeight = (vh * 0.78) / rect.height;
+      const scale = Math.min(scaleByWidth, scaleByHeight, 2.6);
+
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = vw / 2 - cx;
+      const dy = vh / 2 - cy;
+
+      spotlightBackdrop.classList.add('is-visible');
+
+      requestAnimationFrame(() => {
+        polaroid.style.transition = `transform ${TRAVEL_DURATION}ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s ease`;
+        polaroid.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
       });
-      galleryDots.forEach((dot, idx) => {
-        dot.classList.toggle('is-active', idx === i);
-      });
+
+      currentSpotlighted = { item, polaroid, placeholder, fallbackTimer: null };
     }
 
-    function nextGallerySlide(){
+    // Regresa la polaroid actualmente centrada a su lugar original en el grid
+    function unspotlightCurrent(animate){
+      if (!currentSpotlighted) return;
+      const { item, polaroid, placeholder } = currentSpotlighted;
+      currentSpotlighted = null;
+      let restored = false;
+
+      function restoreToGrid(){
+        if (restored) return; // evita restaurar dos veces si transitionend y el respaldo coinciden
+        restored = true;
+        polaroid.classList.remove('is-spotlighted');
+        polaroid.style.position = '';
+        polaroid.style.top = '';
+        polaroid.style.left = '';
+        polaroid.style.width = '';
+        polaroid.style.height = '';
+        polaroid.style.margin = '';
+        polaroid.style.zIndex = '';
+        polaroid.style.transform = '';
+        polaroid.style.transition = '';
+        if (placeholder.parentNode){
+          placeholder.parentNode.insertBefore(polaroid, placeholder);
+          placeholder.parentNode.removeChild(placeholder);
+        } else {
+          item.appendChild(polaroid);
+        }
+        item.style.minHeight = '';
+      }
+
+      if (!animate){
+        restoreToGrid();
+        return;
+      }
+
+      polaroid.style.transition = `transform ${TRAVEL_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease`;
+      polaroid.style.transform = 'translate(0px, 0px) scale(1)';
+
+      const onDone = () => {
+        polaroid.removeEventListener('transitionend', onDone);
+        restoreToGrid();
+      };
+      polaroid.addEventListener('transitionend', onDone);
+      // Respaldo por si transitionend no dispara (p.ej. elemento oculto)
+      setTimeout(onDone, TRAVEL_DURATION + 150);
+    }
+
+    function highlightGalleryItem(i){
+      unspotlightCurrent(true);
+      galleryItems.forEach((item, idx) => item.classList.toggle('is-zooming', idx === i));
+      galleryDots.forEach((dot, idx) => dot.classList.toggle('is-active', idx === i));
+      spotlightItem(galleryItems[i]);
+    }
+
+    function nextGalleryItem(){
       galleryIndex = (galleryIndex + 1) % galleryItems.length;
-      showGallerySlide(galleryIndex);
+      highlightGalleryItem(galleryIndex);
     }
 
     function startGallery(){
-      if (galleryRunning) return;
+      if (galleryRunning || isPaused) return;
       galleryRunning = true;
-      galleryTimer = setInterval(nextGallerySlide, GALLERY_INTERVAL);
+      highlightGalleryItem(galleryIndex);
+      galleryTimer = setInterval(nextGalleryItem, ZOOM_DURATION);
     }
 
     function stopGallery(){
       galleryRunning = false;
       clearInterval(galleryTimer);
+      unspotlightCurrent(true);
+      spotlightBackdrop.classList.remove('is-visible');
+      galleryItems.forEach(item => item.classList.remove('is-zooming'));
     }
 
-    // Iniciar solo cuando la sección entra en pantalla; pausar al salir
+    // Detiene de inmediato, sin animación (para casos donde no debe verse el viaje de regreso)
+    function stopGalleryInstant(){
+      galleryRunning = false;
+      clearInterval(galleryTimer);
+      unspotlightCurrent(false);
+      spotlightBackdrop.classList.remove('is-visible');
+      galleryItems.forEach(item => item.classList.remove('is-zooming'));
+    }
+
+    // Iniciar el ciclo de zoom solo cuando la sección entra en pantalla,
+    // y mostrar el botón de pausa (fijo a la pantalla) en ese mismo momento
     const gallerySection = document.getElementById('galeria');
     if (gallerySection){
       const galleryObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting){
             startGallery();
+            if (pauseBtn) pauseBtn.classList.add('is-visible');
           } else {
-            stopGallery();
+            stopGalleryInstant();
+            if (pauseBtn) pauseBtn.classList.remove('is-visible');
           }
         });
-      }, { threshold: 0.3 });
+      }, { threshold: 0.2 });
       galleryObserver.observe(gallerySection);
+    }
+
+    /* ----- Botón "Pausar recorrido" ----- */
+    if (pauseBtn){
+      const iconPause = pauseBtn.querySelector('.gp-icon-pause');
+      const iconPlay = pauseBtn.querySelector('.gp-icon-play');
+      const label = pauseBtn.querySelector('.gp-label');
+
+      pauseBtn.addEventListener('click', () => {
+        isPaused = !isPaused;
+        pauseBtn.classList.toggle('is-paused', isPaused);
+        pauseBtn.setAttribute('aria-pressed', String(isPaused));
+
+        if (isPaused){
+          stopGallery();
+          if (iconPause) iconPause.style.display = 'none';
+          if (iconPlay) iconPlay.style.display = 'block';
+          if (label) label.textContent = 'Reanudar recorrido';
+        } else {
+          if (iconPause) iconPause.style.display = 'block';
+          if (iconPlay) iconPlay.style.display = 'none';
+          if (label) label.textContent = 'Pausar recorrido';
+          startGallery();
+        }
+      });
     }
 
     /* ----- Modal de galería con navegación ----- */
@@ -340,20 +456,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openModal(index){
       modalIndex = index;
+      // Restaurar primero la foto a su lugar en el grid (sin animar) para
+      // poder leer su <img> de forma segura, sin importar si estaba centrada
+      stopGalleryInstant();
       renderModalSlide();
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
-      stopGallery();
     }
 
     function closeModal(){
       modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      // Sincronizar la galería de fondo con la foto en la que se quedó el modal
+      // Reanudar el ciclo de zoom a partir de la foto que se estaba viendo
+      // (no hace nada si el usuario había pausado el recorrido manualmente)
       galleryIndex = modalIndex;
-      showGallerySlide(galleryIndex);
       startGallery();
     }
 
@@ -367,12 +485,11 @@ document.addEventListener('DOMContentLoaded', () => {
       renderModalSlide();
     }
 
-    // Abrir modal al hacer clic en la foto activa
+    // Cualquier foto se puede abrir en el modal al hacer clic (el listener va
+    // en la polaroid, no en el item, porque al estar centrada se reubica en <body>)
     galleryItems.forEach((item, i) => {
-      item.addEventListener('click', () => {
-        if (!item.classList.contains('is-active')) return;
-        openModal(i);
-      });
+      const polaroid = item.querySelector('.polaroid');
+      if (polaroid) polaroid.addEventListener('click', () => openModal(i));
     });
 
     modalClose.addEventListener('click', closeModal);

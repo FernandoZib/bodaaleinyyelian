@@ -388,8 +388,8 @@ body.envelope-open {
   <p class="eyebrow">Nuestros momentos</p>
   <h2 class="section-title">Galería</h2>
 
-  <div class="gallery-stage" id="galleryStage">
-    <div class="gallery-item is-active" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto1.jpg" alt="Foto 1"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
+  <div class="gallery-grid" id="galleryGrid">
+    <div class="gallery-item is-zooming" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto1.jpg" alt="Foto 1"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
     <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto2.jpg" alt="Foto 2"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
     <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto3.jpg" alt="Foto 3"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
     <div class="gallery-item" data-caption="Nuestra historia"><div class="polaroid"><div class="polaroid-photo"><img src="galeria/foto4.jpg" alt="Foto 4"></div><p class="polaroid-caption">Nuestra historia</p></div></div>
@@ -471,6 +471,19 @@ body.envelope-open {
   <p class="footer-date">18 de Septiembre, 2026</p>
   <p class="footer-thanks">Con todo nuestro amor, gracias por ser parte de esta historia.</p>
 </footer>
+
+<div class="gallery-spotlight-backdrop" id="gallerySpotlightBackdrop" aria-hidden="true"></div>
+
+<button type="button" class="gallery-pause-btn" id="galleryPauseBtn" aria-pressed="false">
+  <svg class="gp-icon gp-icon-pause" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+    <rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"/>
+    <rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor"/>
+  </svg>
+  <svg class="gp-icon gp-icon-play" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="display:none;">
+    <path d="M7 4 L20 12 L7 20 Z" fill="currentColor"/>
+  </svg>
+  <span class="gp-label">Pausar recorrido</span>
+</button>
 
 <script src="script.js"></script>
 <script>

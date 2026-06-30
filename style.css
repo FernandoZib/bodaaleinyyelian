@@ -1186,123 +1186,117 @@ img {
   align-items: center;
 }
 
-.gallery-stage{
-  position: relative;
+.gallery-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 34px 26px;
   width: 100%;
-  max-width: 400px;
-  min-height: 420px;
+  max-width: 480px;
   margin: 40px auto 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .gallery-item{
-  position: absolute;
-  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  transform: scale(0.92) rotate(var(--gr, 0deg));
-  pointer-events: none;
-  transition: opacity 1.2s ease, transform 5.6s ease;
 }
 
-.gallery-item.is-active{
-  opacity: 1;
-  transform: scale(1) rotate(var(--gr, 0deg));
-  z-index: 2;
-  pointer-events: auto;
-}
-
-/* Marco polaroid: el tamaño lo define JS según la orientación real de la imagen */
-.gallery-item .polaroid{
+/* Marco polaroid: tamaño uniforme dentro del grid de 2 columnas */
+.polaroid{
   position: relative;
   background: linear-gradient(160deg, #fffdf8 0%, var(--paper) 60%);
-  padding: 18px 18px 60px;
+  padding: 14px 14px 44px;
   border-radius: 3px;
   box-shadow:
-    0 22px 48px rgba(31,54,80,0.30),
-    0 4px 10px rgba(31,54,80,0.16),
+    0 10px 18px rgba(31,54,80,0.16),
+    0 2px 5px rgba(31,54,80,0.1),
     inset 0 0 0 1px rgba(185,169,138,0.35);
   display: flex;
   flex-direction: column;
-  width: 320px;
-  height: 320px;
-  transition: width 0.5s ease, height 0.5s ease, transform 0.4s ease, box-shadow 0.4s ease;
+  width: 100%;
+  transform: scale(1) rotate(var(--gr, 0deg));
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
   cursor: zoom-in;
 }
 
-.gallery-item.is-active .polaroid:hover{
-  transform: translateY(-4px) rotate(var(--gr, 0deg));
+.polaroid:hover{
+  transform: translateY(-3px) rotate(var(--gr, 0deg));
   box-shadow:
-    0 28px 56px rgba(31,54,80,0.34),
-    0 6px 14px rgba(31,54,80,0.2),
-    inset 0 0 0 1px rgba(185,169,138,0.5);
+    0 20px 40px rgba(31,54,80,0.26),
+    0 5px 12px rgba(31,54,80,0.16),
+    inset 0 0 0 1px rgba(185,169,138,0.45);
 }
 
-/* Variantes de tamaño según orientación real de la imagen (asignadas por JS) */
-.gallery-item .polaroid.is-portrait{
-  width: 270px;
-  height: 370px;
+/* Foto en turno: se traslada al centro de la pantalla con un zoom notorio */
+.gallery-item.is-zooming{
+  z-index: 2;
 }
 
-.gallery-item .polaroid.is-landscape{
-  width: 330px;
-  height: 300px;
+.polaroid.is-spotlighted{
+  cursor: zoom-out;
+  box-shadow:
+    0 50px 90px rgba(15,26,40,0.45),
+    0 18px 36px rgba(15,26,40,0.3),
+    inset 0 0 0 1px rgba(255,255,255,0.6);
 }
 
-.gallery-item .polaroid.is-square{
-  width: 320px;
-  height: 320px;
+.gallery-spotlight-backdrop{
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, rgba(20,32,48,0.55), rgba(12,20,32,0.78));
+  opacity: 0;
+  pointer-events: none;
+  z-index: 480;
+  transition: opacity 0.9s ease;
 }
 
-.gallery-item .polaroid-photo{
-  flex: 1;
-  overflow: hidden;
+.gallery-spotlight-backdrop.is-visible{
+  opacity: 1;
+}
+
+.polaroid-photo{
   position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
   background: #ece7da;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   box-shadow: inset 0 0 0 1px rgba(44,74,104,0.08);
 }
 
-.gallery-item .polaroid-photo img{
+.polaroid-photo img{
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
   transform: scale(1);
-  transition: transform 5.6s ease;
+  transition: transform 5s ease;
 }
 
-.gallery-item.is-active .polaroid-photo img{
-  transform: scale(1.06);
+/* El zoom suave de la imagen acompaña el tiempo que la foto está centrada */
+.polaroid.is-spotlighted .polaroid-photo img{
+  transform: scale(1.1);
 }
 
-.gallery-item .polaroid-caption{
+.polaroid-caption{
   position: absolute;
   left: 0;
   right: 0;
   bottom: 14px;
   text-align: center;
   font-family: var(--script);
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   line-height: 1;
   color: var(--ink-blue);
   letter-spacing: 0.01em;
 }
 
-/* Pequeñas rotaciones alternadas para look más natural de pila de fotos */
-.gallery-item:nth-child(6n+1){ --gr: -3deg; }
-.gallery-item:nth-child(6n+2){ --gr: 2.4deg; }
-.gallery-item:nth-child(6n+3){ --gr: -1.6deg; }
-.gallery-item:nth-child(6n+4){ --gr: 3deg; }
-.gallery-item:nth-child(6n+5){ --gr: -2.2deg; }
-.gallery-item:nth-child(6n+6){ --gr: 1.4deg; }
+/* Pequeñas rotaciones alternadas, sutiles para no solaparse en el grid de 2 columnas */
+.gallery-item:nth-child(6n+1){ --gr: -1.1deg; }
+.gallery-item:nth-child(6n+2){ --gr: 0.9deg; }
+.gallery-item:nth-child(6n+3){ --gr: -0.7deg; }
+.gallery-item:nth-child(6n+4){ --gr: 1deg; }
+.gallery-item:nth-child(6n+5){ --gr: -0.9deg; }
+.gallery-item:nth-child(6n+6){ --gr: 0.6deg; }
 
 .gallery-dots{
   display: flex;
@@ -1326,19 +1320,72 @@ img {
   transform: scale(1.5);
 }
 
+.gallery-pause-btn{
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translate(-50%, 14px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(185,169,138,0.55);
+  background: rgba(255,255,255,0.85);
+  color: var(--ink-blue);
+  font-family: var(--display);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 10px 28px rgba(15,26,40,0.22);
+  z-index: 550;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.gallery-pause-btn.is-visible{
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.gallery-pause-btn:hover{
+  background: var(--gold-lt);
+  border-color: var(--gold);
+}
+
+.gallery-pause-btn.is-paused{
+  background: var(--ink-blue);
+  border-color: var(--ink-blue);
+  color: var(--paper);
+}
+
+.gallery-pause-btn.is-paused:hover{
+  background: var(--deep-blue);
+}
+
+.gp-icon{
+  flex-shrink: 0;
+}
+
 @media (max-width: 420px){
-  .gallery-stage{ max-width: 320px; min-height: 360px; }
-  .gallery-item .polaroid{ width: 270px; height: 270px; }
-  .gallery-item .polaroid.is-portrait{ width: 230px; height: 320px; }
-  .gallery-item .polaroid.is-landscape{ width: 280px; height: 255px; }
-  .gallery-item .polaroid.is-square{ width: 270px; height: 270px; }
+  .gallery-pause-btn{ bottom: 20px; padding: 9px 18px; font-size: 0.68rem; }
+}
+
+@media (max-width: 420px){
+  .gallery-grid{ max-width: 340px; gap: 18px 14px; }
+  .polaroid{ padding: 10px 10px 36px; }
+  .polaroid-caption{ font-size: 0.95rem; bottom: 11px; }
 }
 
 /* ===================== MODAL GALERÍA ===================== */
 .gallery-modal{
   position: fixed;
   inset: 0;
-  z-index: 200;
+  z-index: 600;
   display: flex;
   align-items: center;
   justify-content: center;
