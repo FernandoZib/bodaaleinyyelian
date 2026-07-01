@@ -802,7 +802,7 @@ img {
   position: relative;
   width: 86%;
   max-width: 860px;
-  background: var(--pale-blue);
+  background: var(--paper);
   padding: 40px 0;
   text-align: center;
   display: flex;
@@ -823,7 +823,7 @@ img {
   height: 0;
   border-style: solid;
   border-width: 0 32px 0 0;
-  border-color: transparent var(--pale-blue) transparent transparent;
+  border-color: transparent var(--paper) transparent transparent;
   top: 50%;
   transform: translateY(-50%);
   border-width: 60px 32px 60px 0;
@@ -841,7 +841,7 @@ img {
   height: 0;
   border-style: solid;
   border-width: 60px 0 60px 32px;
-  border-color: transparent transparent transparent var(--pale-blue);
+  border-color: transparent transparent transparent var(--paper);
   pointer-events: none;
 }
 
@@ -1002,7 +1002,7 @@ img {
   display:flex;
   align-items:center;
   justify-content:center;
-  background: var(--pale-blue);
+  background: var(--paper);
   color: var(--ink-blue);
   margin-bottom: 14px;
 }
