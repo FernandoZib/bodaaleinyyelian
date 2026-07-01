@@ -1205,7 +1205,7 @@ img {
 .polaroid{
   position: relative;
   background: linear-gradient(160deg, #fffdf8 0%, var(--paper) 60%);
-  padding: 14px 14px 44px;
+  padding: 14px 14px 52px;
   border-radius: 3px;
   box-shadow:
     0 10px 18px rgba(31,54,80,0.16),
@@ -1281,11 +1281,12 @@ img {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 14px;
+  bottom: 10px;
+  padding: 0 8px;
   text-align: center;
   font-family: var(--script);
-  font-size: 1.1rem;
-  line-height: 1;
+  font-size: 1.05rem;
+  line-height: 1.15;
   color: var(--ink-blue);
   letter-spacing: 0.01em;
 }
@@ -1377,7 +1378,7 @@ img {
 
 @media (max-width: 420px){
   .gallery-grid{ max-width: 340px; gap: 18px 14px; }
-  .polaroid{ padding: 10px 10px 36px; }
+  .polaroid{ padding: 10px 10px 42px; }
   .polaroid-caption{ font-size: 0.95rem; bottom: 11px; }
 }
 

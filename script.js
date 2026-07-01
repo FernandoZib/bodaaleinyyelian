@@ -362,7 +362,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function nextGalleryItem(){
-      galleryIndex = (galleryIndex + 1) % galleryItems.length;
+      // Al llegar a la última foto, el recorrido se pausa solo en vez de
+      // reiniciar el ciclo; queda listo para arrancar desde el principio
+      // la próxima vez que se reanude.
+      if (galleryIndex >= galleryItems.length - 1){
+        galleryIndex = 0;
+        pauseTour();
+        return;
+      }
+      galleryIndex++;
       highlightGalleryItem(galleryIndex);
     }
 
@@ -409,27 +417,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ----- Botón "Pausar recorrido" ----- */
+    const pauseIconPause = pauseBtn ? pauseBtn.querySelector('.gp-icon-pause') : null;
+    const pauseIconPlay = pauseBtn ? pauseBtn.querySelector('.gp-icon-play') : null;
+    const pauseLabel = pauseBtn ? pauseBtn.querySelector('.gp-label') : null;
+
+    function updatePauseButtonUI(){
+      if (!pauseBtn) return;
+      pauseBtn.classList.toggle('is-paused', isPaused);
+      pauseBtn.setAttribute('aria-pressed', String(isPaused));
+      if (pauseIconPause) pauseIconPause.style.display = isPaused ? 'none' : 'block';
+      if (pauseIconPlay) pauseIconPlay.style.display = isPaused ? 'block' : 'none';
+      if (pauseLabel) pauseLabel.textContent = isPaused ? 'Reanudar recorrido' : 'Pausar recorrido';
+    }
+
+    function pauseTour(){
+      if (isPaused) return;
+      isPaused = true;
+      stopGallery();
+      updatePauseButtonUI();
+    }
+
+    function resumeTour(){
+      if (!isPaused) return;
+      isPaused = false;
+      updatePauseButtonUI();
+      startGallery();
+    }
+
     if (pauseBtn){
-      const iconPause = pauseBtn.querySelector('.gp-icon-pause');
-      const iconPlay = pauseBtn.querySelector('.gp-icon-play');
-      const label = pauseBtn.querySelector('.gp-label');
-
       pauseBtn.addEventListener('click', () => {
-        isPaused = !isPaused;
-        pauseBtn.classList.toggle('is-paused', isPaused);
-        pauseBtn.setAttribute('aria-pressed', String(isPaused));
-
-        if (isPaused){
-          stopGallery();
-          if (iconPause) iconPause.style.display = 'none';
-          if (iconPlay) iconPlay.style.display = 'block';
-          if (label) label.textContent = 'Reanudar recorrido';
-        } else {
-          if (iconPause) iconPause.style.display = 'block';
-          if (iconPlay) iconPlay.style.display = 'none';
-          if (label) label.textContent = 'Pausar recorrido';
-          startGallery();
-        }
+        isPaused ? resumeTour() : pauseTour();
       });
     }
 
