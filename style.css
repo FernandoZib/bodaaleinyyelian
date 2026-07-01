@@ -125,10 +125,12 @@ img {
   justify-content:center;
   padding-top: 60px;
   padding-bottom: 60px;
-  background-image: url(fondo.jpg);
+
+  background-image: url(fondo.png);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  background-color: var(--ink-blue);
   opacity:1;
   transform:none;
 }
