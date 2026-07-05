@@ -69,6 +69,12 @@ img {
   transform: translateY(0);
 }
 
+#countdown{
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
 .eyebrow{
   font-family: var(--display);
   font-size: 2rem;
