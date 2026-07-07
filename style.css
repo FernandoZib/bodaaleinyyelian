@@ -220,7 +220,7 @@ img {
 .stack-section{
   max-width: 100%;
   padding: 70px 24px 90px;
-  background: linear-gradient(160deg, var(--ink-blue), var(--deep-blue));
+  background: var(--ink-blue);
   display:flex;
   justify-content:center;
 }
