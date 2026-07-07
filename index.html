@@ -443,6 +443,42 @@ body.envelope-open {
   </div>
 </section>
 
+<!-- ============ CONFIRMACIÓN DE ASISTENCIA ============ -->
+<section class="section rsvp-section" id="confirmacion">
+  <div class="divider-leaf" aria-hidden="true">
+    <svg viewBox="0 0 120 24"><path d="M0 12 H45" /><path d="M75 12 H120" /><path d="M60 12 c-6 -10 -18 -10 -18 0 c0 10 12 10 18 0 c6 -10 18 -10 18 0 c0 10 -12 10 -18 0" /></svg>
+  </div>
+  <p class="eyebrow">Tu presencia es un regalo</p>
+  <h2 class="section-title">Confirma tu asistencia</h2>
+  <p class="rsvp-text">Nos encantaría contar contigo. Por favor confírmanos antes del <strong>1 de septiembre</strong> para poder organizar cada detalle con cariño.</p>
+
+  <form class="rsvp-card" id="rsvpForm" novalidate>
+    <div class="rsvp-field">
+      <label class="rsvp-label" for="rsvpName">Nombre completo</label>
+      <input class="rsvp-input" type="text" id="rsvpName" name="rsvpName" placeholder="Escribe tu nombre" required>
+    </div>
+
+    <div class="rsvp-field">
+      <label class="rsvp-label" for="rsvpGuests">Número de acompañantes</label>
+      <input class="rsvp-input" type="number" id="rsvpGuests" name="rsvpGuests" min="0" max="10" placeholder="0" inputmode="numeric" required>
+    </div>
+
+    <div class="rsvp-field">
+      <span class="rsvp-label">¿Podrás acompañarnos?</span>
+      <div class="rsvp-toggle" id="rsvpToggle" role="radiogroup" aria-label="Confirmación de asistencia">
+        <button type="button" class="rsvp-toggle-btn" data-value="Sí, ahí estaré">Sí, asistiré</button>
+        <button type="button" class="rsvp-toggle-btn" data-value="No podré asistir">No podré</button>
+      </div>
+      <p class="rsvp-error" id="rsvpError">Por favor completa todos los campos.</p>
+    </div>
+
+    <button type="submit" class="rsvp-submit-btn">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M20.5 3.5 L3.5 10.2 L10.6 12.4 L13 20.5 L20.5 3.5 Z M10.6 12.4 L18 6.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Enviar confirmación
+    </button>
+  </form>
+</section>
+
 <!-- ============ FOOTER ============ -->
 <footer class="section footer-section">
   <div class="monogram small" aria-hidden="true">

@@ -576,6 +576,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // ===================== RSVP / Confirmación de asistencia =====================
+  // IMPORTANTE: reemplaza el número de abajo por tu WhatsApp real.
+  // Formato: código de país + número, SIN "+", SIN espacios ni guiones.
+  // Ejemplo México (Yucatán): 52 + 1 + número a 10 dígitos → "5219991234567"
+  const RSVP_WHATSAPP_NUMBER = "56 4164 0594"; // <-- reemplazar
+
+  const rsvpForm = document.getElementById('rsvpForm');
+  if (rsvpForm) {
+    const rsvpToggle = document.getElementById('rsvpToggle');
+    const rsvpError = document.getElementById('rsvpError');
+    let rsvpConfirmValue = '';
+
+    rsvpToggle.querySelectorAll('.rsvp-toggle-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        rsvpToggle.querySelectorAll('.rsvp-toggle-btn').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        rsvpConfirmValue = btn.dataset.value;
+        rsvpError.classList.remove('is-visible');
+      });
+    });
+
+    rsvpForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('rsvpName').value.trim();
+      const guests = document.getElementById('rsvpGuests').value.trim();
+
+      if (!name || guests === '' || !rsvpConfirmValue) {
+        rsvpError.classList.add('is-visible');
+        return;
+      }
+
+      const lines = [
+        '¡Hola! Soy ' + name + ' 👋',
+        '',
+        'Confirmo mi asistencia a la boda de Aleiny & César Elián:',
+        '• Asistencia: ' + rsvpConfirmValue,
+        '• Acompañantes (sin contarme a mí): ' + guests
+      ];
+      const message = encodeURIComponent(lines.join('\n'));
+      const url = 'https://wa.me/' + RSVP_WHATSAPP_NUMBER + '?text=' + message;
+      window.open(url, '_blank');
+    });
+  }
+
 });
 
 
