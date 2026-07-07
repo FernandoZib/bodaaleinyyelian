@@ -611,9 +611,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const lines = [
         '¡Hola! Soy ' + name + ' 👋',
         '',
-        'Confirmo mi asistencia a la boda de Aleiny & César Elián:',
-        '• Asistencia: ' + rsvpConfirmValue,
-        '• Acompañantes (sin contarme a mí): ' + guests
+        'Con mucha ilusión y cariño por su pronto matrimonio, confirmo mi asistencia a su boda',
+        '',
+        '',
+        '• Asistencia: ',
+        '' + rsvpConfirmValue,
+        '• Acompañantes (sin contarme a mí): ',
+        '' + guests
       ];
       const message = encodeURIComponent(lines.join('\n'));
       const url = 'https://wa.me/' + RSVP_WHATSAPP_NUMBER + '?text=' + message;
