@@ -464,15 +464,15 @@ body.envelope-open {
 
 <div class="gallery-spotlight-backdrop" id="gallerySpotlightBackdrop" aria-hidden="true"></div>
 
-<button type="button" class="gallery-pause-btn" id="galleryPauseBtn" aria-pressed="false">
-  <svg class="gp-icon gp-icon-pause" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+<button type="button" class="gallery-pause-btn is-paused" id="galleryPauseBtn" aria-pressed="true">
+  <svg class="gp-icon gp-icon-pause" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="display:none;">
     <rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"/>
     <rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor"/>
   </svg>
-  <svg class="gp-icon gp-icon-play" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="display:none;">
+  <svg class="gp-icon gp-icon-play" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
     <path d="M7 4 L20 12 L7 20 Z" fill="currentColor"/>
   </svg>
-  <span class="gp-label">Pausar recorrido</span>
+  <span class="gp-label">Iniciar recorrido</span>
 </button>
 
 <script src="script.js"></script>

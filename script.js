@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let galleryIndex = 0;
     let galleryTimer = null;
     let galleryRunning = false;
-    let isPaused = false;           // true cuando el usuario pausó el recorrido manualmente
+    let isPaused = true;            // true cuando el recorrido no está en marcha (aún no iniciado o pausado por el usuario)
     let currentSpotlighted = null;  // { item, polaroid, placeholder }
 
     // Crear los puntos indicadores (uno por foto, muestran cuál está en turno)
@@ -405,10 +405,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const galleryObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting){
-            startGallery();
+            // Ya no se inicia el recorrido automáticamente al llegar a la
+            // sección; solo se muestra el botón para que el usuario decida
+            // cuándo iniciarlo.
             if (pauseBtn) pauseBtn.classList.add('is-visible');
+            updatePauseButtonUI();
           } else {
+            // Al salir de la sección se detiene y se vuelve a dejar en
+            // estado "no iniciado", para que la próxima vez que el usuario
+            // llegue a la Galería deba tocar el botón otra vez.
+            isPaused = true;
             stopGalleryInstant();
+            updatePauseButtonUI();
             if (pauseBtn) pauseBtn.classList.remove('is-visible');
           }
         });
@@ -416,7 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
       galleryObserver.observe(gallerySection);
     }
 
-    /* ----- Botón "Pausar recorrido" ----- */
+    /* ----- Botón "Iniciar / Pausar recorrido" ----- */
     const pauseIconPause = pauseBtn ? pauseBtn.querySelector('.gp-icon-pause') : null;
     const pauseIconPlay = pauseBtn ? pauseBtn.querySelector('.gp-icon-play') : null;
     const pauseLabel = pauseBtn ? pauseBtn.querySelector('.gp-label') : null;
@@ -427,8 +435,11 @@ document.addEventListener('DOMContentLoaded', () => {
       pauseBtn.setAttribute('aria-pressed', String(isPaused));
       if (pauseIconPause) pauseIconPause.style.display = isPaused ? 'none' : 'block';
       if (pauseIconPlay) pauseIconPlay.style.display = isPaused ? 'block' : 'none';
-      if (pauseLabel) pauseLabel.textContent = isPaused ? 'Reanudar recorrido' : 'Pausar recorrido';
+      if (pauseLabel) pauseLabel.textContent = isPaused ? 'Iniciar recorrido' : 'Pausar recorrido';
     }
+
+    // Sincronizar el botón con el estado inicial (pausado / no iniciado)
+    updatePauseButtonUI();
 
     function pauseTour(){
       if (isPaused) return;
