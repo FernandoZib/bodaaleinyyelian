@@ -580,7 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // IMPORTANTE: reemplaza el número de abajo por tu WhatsApp real.
   // Formato: código de país + número, SIN "+", SIN espacios ni guiones.
   // Ejemplo México (Yucatán): 52 + 1 + número a 10 dígitos → "5219991234567"
-  const RSVP_WHATSAPP_NUMBER = "56 4164 0594"; // <-- reemplazar
+  const RSVP_WHATSAPP_NUMBER = "9841438740"; // <-- reemplazar
 
   const rsvpForm = document.getElementById('rsvpForm');
   if (rsvpForm) {
@@ -611,11 +611,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const lines = [
         '¡Hola! Soy ' + name + ' 👋',
         '',
-        'Con mucha ilusión y cariño por su pronto matrimonio, confirmo mi asistencia a su boda',
+        'Con mucha fe e ilusión por su pronto matrimonio, confirmo mi asistencia a su boda.',
         '',
         '',
         '• Asistencia: ',
         '' + rsvpConfirmValue,
+        '',
         '• Acompañantes (sin contarme a mí): ',
         '' + guests
       ];
