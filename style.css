@@ -1050,13 +1050,22 @@ img {
 
 
 /* ===================== GIFT ===================== */
-.gift-section{ padding-top: 80px; }
-.gift-icon{ width: 56px; margin: 0 auto 22px; color: var(--dusk-blue); }
+.gift-section{
+  padding-top: 80px;
+  background: var(--ink-blue);
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+.gift-section .divider-leaf{ color: var(--powder); }
+.gift-section .eyebrow{ color: var(--pale-blue); }
+.gift-icon{ width: 56px; margin: 0 auto 22px; color: var(--powder); }
 .gift-icon svg{ width:100%; height:auto; }
 .gift-text{
   font-size: 1.02rem;
   line-height: 1.85;
-  color: var(--text-dark);
+  color: var(--pale-blue);
   margin-bottom: 28px;
   max-width: 400px;
   margin-left: auto;
@@ -1070,7 +1079,7 @@ img {
   padding: 32px 28px 28px;
   margin: 0 auto 12px;
   max-width: 340px;
-  box-shadow: 0 6px 24px rgba(44,74,104,0.09);
+  box-shadow: 0 10px 30px rgba(15,26,38,0.25);
   position: relative;
 }
 .gift-box::before{
