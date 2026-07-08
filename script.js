@@ -609,15 +609,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const lines = [
-        '¡Hola! Soy ' + name + ' 👋',
-        '',
-        'Con mucha fe e ilusión por su pronto matrimonio, confirmo mi asistencia a su boda.',
-        '',
+        '¡Hola! Soy ' + name + ' 👋',              
         '',
         '• Asistencia: ',
         '' + rsvpConfirmValue,
         '',
-        '• Acompañantes (sin contarme a mí): ',
+        '• Número de pases confirmados: ',
         '' + guests
       ];
       const message = encodeURIComponent(lines.join('\n'));
